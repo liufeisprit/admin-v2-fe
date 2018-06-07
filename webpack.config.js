@@ -81,7 +81,7 @@ module.exports={
             }),
         //把css都提取出来 styles.css 会将所有的入口 chunk(entry chunks)中引用的 *.css，移动到独立分离的 CSS 文件。
             new ExtractTextPlugin("css/[name].css"),
-            new CleanWebpackPlugin(['dist']),
+            // new CleanWebpackPlugin(['dist']),
             new webpack.optimize.CommonsChunkPlugin({
                 name:'common',
                 filename:'js/base.js'
