@@ -73,35 +73,66 @@ class Title extends React.Component{
         )
     }
 }
-class Child extends React.Component{
+class Child1 extends React.Component{
     constructor(props){
         super(props)
     }
     render(){
         return (
             <div>
-                <h1>父组件的bgColor{this.props.bgColor}</h1>
-                <button onClick={(e)=>this.hadleClick(e)}>改变颜色 </button>
+                {/* <h1>Child1父组件的bgColor{this.props.bgColor}</h1> */}
+                <button onClick={(e)=>this.hadleClick(e)}>改变Child2颜色 </button>
             </div>
             
         )
         
     }
     hadleClick(e){
-        this.props.bgColor='red'
+        //不能直接修改props修改 只读的
+        // this.props.bgColor='red'
+        this.props.onchangeBgColor('red')
+    }
+}
+class Child2 extends React.Component{
+    constructor(props){
+        super(props)
+    }
+    render(){
+        return (
+            <div  style={{background:this.props.bgColor}}>
+                <h1>Child2的bgColor{this.props.bgColor}</h1>
+                {/* <button onClick={(e)=>this.hadleClick(e)}>改变颜色 </button> */}
+            </div>
+            
+        )
+        
+    }
+    hadleClick(e){
+        //不能直接修改props修改 只读的
+        // this.props.bgColor='red'
+        this.props.onchangeBgColor('red')
     }
 }
 class Father extends React.Component{
     constructor(props){
         super(props)
-        this.setState={
+        this.state={
             bgColor:'#999'
         }
     }
+    onchangeBgColor(color){
+        this.setState({
+            bgColor:color
+        })
+    }
     render(props){
         return (
-        <div style={{background:this.state.bgColor}}>
-            <Child bgColor={this.state.bgColor}/>
+        // <div style={{background:this.state.bgColor}}>
+        //     <Child1 bgColor={this.state.bgColor} onchangeBgColor={(color)=>{this.onchangeBgColor(color)}}/>
+        // </div>
+        <div>
+            <Child1 onchangeBgColor={(color)=>{this.onchangeBgColor(color)}}/>
+            <Child2  bgColor={this.state.bgColor}/>
         </div>
         )
     }
