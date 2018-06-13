@@ -1,153 +1,59 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
-import './index.scss'
-import 'font-awesome/css/font-awesome.min.css'
-function Compoent(){
-    return <h1>i am sb</h1>
-}
-
-class  ES6Comoonent extends React.Component{
-    
+// import {HashRouter as Router ,Route,Link} from 'react-router-dom'
+import {BrowserRouter as Router ,Route,Link} from 'react-router-dom'
+class A extends React.Component{
     constructor(props){
-        super(props);
-        this.state={
-            name:'sb',
-            age:18
-        }
-        // this.hadleClick=this.hadleClick.bind(this)
-    }
-    hadleClick(e){
-        console.log(this)
-        this.setState({
-            age:++this.state.age
-        })
-    }
-    onValueChange(e){
-        this.setState({
-            age:e.target.value
-        })
-    }
-    render(){
-        // setTimeout(()=>{
-        //     this.setState({
-        //         name:'big sb'
-        //     })
-        // },2000)
-        return (
-        <div>
-            <h1>i am {this.state.name}</h1>
-            <p>i am {this.state.age}</p>
-            <button onClick={(e)=>this.hadleClick(e)}>加一岁</button>
-            <input type="text" onChange={(e)=>this.onValueChange(e)}/>
-        </div>
-        )
-        
-    }
-}
-class App extends React.Component{
-    render(){
-        return (
-            <div className='sb'>
-
-            {/* 组件的组合方式 */}
-            {/* 容器式组件 单纯组件 */}
-
-                <Title title='i am title'><span>i am title's children</span></Title>
-               {/* <ES6Comoonent name='sb 123'/>  */}
-            </div>
-        )
-    }
-}
-class Title extends React.Component{
-    constructor(props){
-        super(props);
+        super(props)
     }
     render(){
         return(
             <div>
-                <h1>{this.props.title}</h1>
-                <p>{this.props.children}</p>
+                参数是 : {this.props.match.params.id}
+                component A
             </div>
-            
         )
+            
     }
 }
-class Child1 extends React.Component{
+class B extends React.Component{
+    constructor(props){
+        super(props)
+    }
+    render(){
+        return(
+            <div>component B</div>
+        )
+            
+    }
+}
+class Wrapper extends React.Component{
     constructor(props){
         super(props)
     }
     render(){
         return (
             <div>
-                {/* <h1>Child1父组件的bgColor{this.props.bgColor}</h1> */}
-                <button onClick={(e)=>this.hadleClick(e)}>改变Child2颜色 </button>
+            <Link to='/a'>组件A</Link> 
+            <br/>
+            <Link to='/a/123'>带参数的组件A</Link> 
+            <br/>
+            <Link to='/b'>组件B</Link>
+            {this.props.children}
             </div>
+        )
             
-        )
-        
-    }
-    hadleClick(e){
-        //不能直接修改props修改 只读的
-        // this.props.bgColor='red'
-        this.props.onchangeBgColor('red')
     }
 }
-class Child2 extends React.Component{
-    constructor(props){
-        super(props)
-    }
-    render(){
-        return (
-            <div  style={{background:this.props.bgColor}}>
-                <h1>Child2的bgColor{this.props.bgColor}</h1>
-                {/* <button onClick={(e)=>this.hadleClick(e)}>改变颜色 </button> */}
-            </div>
-            
-        )
-        
-    }
-    hadleClick(e){
-        //不能直接修改props修改 只读的
-        // this.props.bgColor='red'
-        this.props.onchangeBgColor('red')
-    }
-}
-class Father extends React.Component{
-    constructor(props){
-        super(props)
-        this.state={
-            bgColor:'#999'
-        }
-    }
-    onchangeBgColor(color){
-        this.setState({
-            bgColor:color
-        })
-    }
-    render(props){
-        return (
-        // <div style={{background:this.state.bgColor}}>
-        //     <Child1 bgColor={this.state.bgColor} onchangeBgColor={(color)=>{this.onchangeBgColor(color)}}/>
-        // </div>
-        <div>
-            <Child1 onchangeBgColor={(color)=>{this.onchangeBgColor(color)}}/>
-            <Child2  bgColor={this.state.bgColor}/>
-        </div>
-        )
-    }
-}
-let style={'font-size':20+'px'}
-let jsx=<div className='jsx' style={{fontSize:'30px'}}>jsx。。。</div>
 ReactDOM.render(
-    <div> 
+    <Router>
+        <Wrapper>
+            <Route path='/a/:id' component={A}/>
+            <Route path='/b' component={B}/>
+        </Wrapper>
+    </Router>
+
         
-        <Compoent/>
-        <ES6Comoonent name='sb 123'/>
-        <App/>
-        <Father/>
-    </div>,
-    // jsx
-    // ,
+    ,
     document.getElementById('app')
-);
+)

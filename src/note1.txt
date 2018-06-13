@@ -1,0 +1,5 @@
+react生命周期
+mounting 挂载阶段
+updating 运行阶段
+unmponting 卸载阶段
+error handling 错误处理
