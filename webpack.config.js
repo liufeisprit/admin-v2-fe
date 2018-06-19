@@ -11,6 +11,12 @@ module.exports={
             filename:'js/app.js',
             publicPath: '/dist/',
     },
+    resolve:{
+        alias: {
+            page:path.resolve(__dirname,'src/page'),
+            component:path.resolve(__dirname,'src/component')
+        }
+    },
     // devServer: {
     //         contentBase: './dist'
     // },
@@ -77,7 +83,8 @@ module.exports={
         //处理html插件的 
              new HtmlWebpackPlugin({
              title: 'Output Management',
-             template:'./src/index.html'
+             template:'./src/index.html',
+             favicon:'./favicon.ico'
             }),
         //把css都提取出来 styles.css 会将所有的入口 chunk(entry chunks)中引用的 *.css，移动到独立分离的 CSS 文件。
             new ExtractTextPlugin("css/[name].css"),
@@ -87,4 +94,10 @@ module.exports={
                 filename:'js/base.js'
             })
     ],
+    devServer:{
+        port:8086,
+        historyApiFallback:{
+            index:'/dist/index.html'
+        }
+    }
 }

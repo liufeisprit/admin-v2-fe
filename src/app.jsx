@@ -1,59 +1,29 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-// import {HashRouter as Router ,Route,Link} from 'react-router-dom'
-import {BrowserRouter as Router ,Route,Link} from 'react-router-dom'
-class A extends React.Component{
-    constructor(props){
-        super(props)
-    }
-    render(){
-        return(
-            <div>
-                参数是 : {this.props.match.params.id}
-                component A
-            </div>
-        )
-            
-    }
-}
-class B extends React.Component{
-    constructor(props){
-        super(props)
-    }
-    render(){
-        return(
-            <div>component B</div>
-        )
-            
-    }
-}
-class Wrapper extends React.Component{
-    constructor(props){
-        super(props)
-    }
-    render(){
-        return (
-            <div>
-            <Link to='/a'>组件A</Link> 
-            <br/>
-            <Link to='/a/123'>带参数的组件A</Link> 
-            <br/>
-            <Link to='/b'>组件B</Link>
-            {this.props.children}
-            </div>
-        )
-            
-    }
-}
-ReactDOM.render(
-    <Router>
-        <Wrapper>
-            <Route path='/a/:id' component={A}/>
-            <Route path='/b' component={B}/>
-        </Wrapper>
-    </Router>
+import {BrowserRouter as Router ,Route,Link,Switch,IndexRoute,Redirect} from 'react-router-dom'
+import Home from 'page/home/index.jsx';
+import Layout from 'component/layout/index.jsx';
 
-        
+class App extends React.Component{
+    render(){
+        return(
+            <Router>
+                <Layout>
+                <Switch>
+                    <Route exact path='/' component={Home}/>
+                    <Route  path='/product' component={Home}/>
+                    <Route  path='/product-category' component={Home}/>
+                    
+                    {/* <Redirect from='*' to='/'></Redirect> */}
+                </Switch>
+                </Layout>
+            </Router>
+        )
+    }
+}
+
+ReactDOM.render(
+    <App />
     ,
     document.getElementById('app')
 )
