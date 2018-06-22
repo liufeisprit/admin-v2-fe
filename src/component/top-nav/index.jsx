@@ -1,8 +1,25 @@
 import React                from 'react';
 import { Link, NavLink }    from 'react-router-dom';
+import MUtil   from 'util/mm.jsx'
+import User    from 'service/user-service.jsx'
+const user=new User()
+const _mm=new MUtil()
 class NavTop extends React.Component{
     constructor(props){
         super(props)
+        this.state={
+                username:_mm.getStorage('userInfo').username||''
+            }
+    }
+    onLogout(){
+        user.logOut().then(res=>{
+            _mm.removeStorage('userInfo');
+            window.location.href='/login'
+            // this.props.history.push('/login')
+        },err=>{
+            _mm.errorTips(err)
+        })
+        
     }
     render(){
         return(
@@ -15,10 +32,10 @@ class NavTop extends React.Component{
                     <li className="dropdown">
                         <a className="dropdown-toggle" href="javascript:;">
                             <i className="fa fa-user fa-fw"></i>
-                            {<span>欢迎您</span>
-                                // this.state.username
-                                // ? <span>欢迎，{this.state.username}</span>
-                                // : <span>欢迎您</span>
+                            {
+                                this.state.username
+                                ? <span>欢迎，{this.state.username}</span>
+                                : <span>欢迎您</span>
                             }
                             <i className="fa fa-caret-down"></i>
                         </a>
