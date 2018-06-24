@@ -13,7 +13,6 @@ class Product{
         }else if(listParam.listType=='search'){
             url='/manage/product/search.do';
             data.pageNum=listParam.pageNum;
-            data.pageNum=listParam.pageNum;
             data[listParam.searchType]=listParam.keyword;
 
         }
@@ -29,6 +28,16 @@ class Product{
             type    : 'post',
             url     : '/manage/product/set_sale_status.do',
             data:productInfo
+        });
+    }
+    //获取子分类列表
+    getCategoryList(parentCateGoryId){
+        return _mm.request({
+            type: 'post',
+            url: '/manage/category/get_category.do',
+            data: {
+                categoryId: parentCateGoryId||0
+            }
         });
     }
 }

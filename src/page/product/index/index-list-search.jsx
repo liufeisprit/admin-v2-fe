@@ -31,6 +31,7 @@ class ListSearch extends React.Component{
     }
     //点击搜素事件
     onSearch(){
+        
         this.props.onSearch(this.state.searchType,this.state.searchKeyword)
     }
     render(){
@@ -55,6 +56,7 @@ class ListSearch extends React.Component{
                             placeholder="请输入关键词"
                             name='searchKeyword'
                             onChange={e=>{this.onValueChange(e)}}
+                            onKeyUp={e => { this.onKeyUpChange(e)}}
                             />
                     </div>
                     <button className="btn btn-primary" onClick={e=>{this.onSearch()}}>搜索</button>

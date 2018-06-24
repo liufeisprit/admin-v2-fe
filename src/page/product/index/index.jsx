@@ -30,6 +30,10 @@ class ProductList extends React.Component{
             listParam.searchType=this.state.searchType;
             listParam.keyword=this.state.searchKeyword;
         }
+        if (this.state.searchType == 'productId' && !Number(this.state.seachKeyword)) {
+            _mm.errorTips('按商品id搜索请输入商品数字id');
+            return ;
+        }
         _product.getProductList(listParam).then(res=>{
             this.setState(res)
         },err=>{
@@ -89,6 +93,13 @@ class ProductList extends React.Component{
         return(
             <div id='page-wrapper'>
             <PageTitle title='商品列表'>
+                <div className="page-header-right">
+                        <Link to='/product/save' className='btn btn-primary'>
+                            <i className='fa fa-plus'></i>
+                            <span>添加商品</span>
+                        </Link>
+                </div>
+            </PageTitle>
                 <ListSearch onSearch={(searchType,searchKeyword)=>{
                     this.onSearch(searchType,searchKeyword)
                 }}/>
@@ -144,7 +155,7 @@ class ProductList extends React.Component{
                             
                     </div>
                 </div> */}
-            </PageTitle>
+            {/* </PageTitle> */}
             </div>
         )
     }
