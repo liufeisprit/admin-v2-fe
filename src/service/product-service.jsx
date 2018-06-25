@@ -40,5 +40,53 @@ class Product{
             }
         });
     }
+    //检查表单保存商品的字段
+    checkProduct(product){
+        let result={
+            status:true,
+            msg:'验证通过'
+        }
+        if(typeof product.name!=='string'||product.name==''){
+            return{
+                status:false,
+                msg:'商品名称不能为空'
+            }
+        }
+        if(typeof product.subtitle!=='string'||product.subtitle==''){
+            return{
+                status:false,
+                msg:'商品描述不能为空'
+            }
+        }
+        if(!product.price||product.price<0){
+            return{
+                status:false,
+                msg:'请输入正确的商品价格'
+            }
+        }
+        if(!product.stock||product.stock<=0){
+            return{
+                status:false,
+                msg:'请输入正确的库存数量'
+            }
+        }
+        if(typeof product.curCategoryId!=='number'||product.curCategoryId<=0){
+            return{
+                status:false,
+                msg:'请选择商品分类'
+            }
+        }
+        if(typeof product.stock!=='number'||product.stock<=0){
+            return{
+                status:false,
+                msg:'请输入正确的库存数量'
+            }
+        }
+        return result;
+    }
+    //保存商品的接口
+    saveProduct(){
+
+    }
 }
 export default Product
