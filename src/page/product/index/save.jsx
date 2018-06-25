@@ -61,7 +61,6 @@ class ProductSave extends React.Component {
     }
     //富文本编辑器值发生改变
     onRichEditorChange(value){
-        console.log(value)
         this.setState({
             detail:value
         })
@@ -76,7 +75,7 @@ class ProductSave extends React.Component {
         let product={
             name                :this.state.name,
             subtitle            :this.state.subtitle,
-            curCategoryId       :this.state.curCategoryId,
+            categoryId          :parseFloat(this.state.curCategoryId),
             subImages           :this.getSubImageString(),
             detail              :this.state.detail,
             price               :parseFloat(this.state.price),
@@ -87,7 +86,7 @@ class ProductSave extends React.Component {
         let checkProductResult=_product.checkProduct(product)
         if(checkProductResult.status){
             _product.saveProduct(product).then(res=>{
-                _mm.successTips(err)
+                _mm.successTips(res)
                 this.props.history.push('/')
             },err=>{
                 _mm.errorTips(err)
@@ -188,7 +187,7 @@ class ProductSave extends React.Component {
                             </div>
                             <div className="form-group">
                                 <label className="col-md-2 control-label">商品详情</label>
-                                <div className="col-md-5">
+                                <div className="col-md-8">
                                     <RichEditor onValueChange={value=>{this.onRichEditorChange(value)}}/>
                                 </div>
                             </div>

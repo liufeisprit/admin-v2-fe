@@ -30,7 +30,8 @@ class ProductList extends React.Component{
             listParam.searchType=this.state.searchType;
             listParam.keyword=this.state.searchKeyword;
         }
-        if (this.state.searchType == 'productId' && !Number(this.state.seachKeyword)) {
+        console.log(this.state.searchType, this.state.searchKeyword)
+        if (this.state.searchType == 'productId' && !Number(this.state.searchKeyword)) {
             _mm.errorTips('按商品id搜索请输入商品数字id');
             return ;
         }
@@ -44,6 +45,7 @@ class ProductList extends React.Component{
         })
     }
     onSearch(searchType,searchKeyword){
+        console.log('searchKeyword====' + searchKeyword)
         let listType=searchKeyword==''?'list':'search';
         this.setState({
             pageNum:1,

@@ -58,6 +58,12 @@ class Product{
                 msg:'商品描述不能为空'
             }
         }
+        if (typeof product.categoryId !== 'number' || product.categoryId <= 0) {
+            return {
+                status: false,
+                msg: '请选择商品分类'
+            }
+        }
         if(!product.price||product.price<0){
             return{
                 status:false,
@@ -70,12 +76,7 @@ class Product{
                 msg:'请输入正确的库存数量'
             }
         }
-        if(typeof product.curCategoryId!=='number'||product.curCategoryId<=0){
-            return{
-                status:false,
-                msg:'请选择商品分类'
-            }
-        }
+        
         if(typeof product.stock!=='number'||product.stock<=0){
             return{
                 status:false,
@@ -85,8 +86,12 @@ class Product{
         return result;
     }
     //保存商品的接口
-    saveProduct(){
-
+    saveProduct(product){
+        return _mm.request({
+            type: 'post',
+            url: '/manage/product/save.do',
+            data: product
+        });
     }
 }
 export default Product
