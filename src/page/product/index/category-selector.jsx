@@ -18,7 +18,7 @@ class CateGorySelector extends React.Component {
     }
     //获取数据
     componentDidMount(){
-        this.loadFirstCategory()
+        this.loadFirstCategory()   
     }
     //加载一级分类
     loadFirstCategory(){
@@ -32,6 +32,9 @@ class CateGorySelector extends React.Component {
     }
     //切换一级分类触发事件
     OnFirstCategoryChange(e){
+        if(this.props.readOnly){
+            return
+        }
         let newValue=e.target.value||0;
         this.setState({
             firstCategoryId: newValue,
@@ -46,6 +49,7 @@ class CateGorySelector extends React.Component {
     //加载二级分类
     loadSecondCateGory(){
         _product.getCategoryList(this.state.firstCategoryId).then(res => {
+            
             this.setState({
                 secondCategoryList: res,
             })
@@ -55,6 +59,9 @@ class CateGorySelector extends React.Component {
     }
     //切换二级分类触发事件
     OnSecondCategoryChange(e) {
+        if(this.props.readOnly){
+            return
+        }
         let newValue = e.target.value || 0;
         this.setState({
             secondCategoryId: newValue,
@@ -75,12 +82,39 @@ class CateGorySelector extends React.Component {
         }
         
     }
+    //接收到props 触发
+    componentWillReceiveProps(nextProps){
+        //props发生变化 新的props要用传入的nextProps 旧的props用this.props
+        let categoryChange      =this.props.categoryId      !==nextProps.categoryId,
+            parentCategoryChange=this.props.parentCategoryId!==nextProps.parentCategoryId;
+            //数据没有发生变化的时候不做处理
+        if(!categoryChange&&!parentCategoryChange){
+            return
+        }
+        //假如只有一级分类
+        if(nextProps.parentCategoryId==0){
+            this.setState({
+                firstCategoryId:nextProps.categoryId,
+                secondCategoryId:0
+            },()=>{
+            })
+        }else{
+            this.setState({
+                firstCategoryId:nextProps.parentCategoryId,
+                secondCategoryId:nextProps.categoryId
+            },()=>{
+                parentCategoryChange&&this.loadSecondCateGory()
+            })
+        }
+    }
     render() {
         return (
 
             <div className="col-md-10">
                 <select name="" className='form-control cate-select'
+                value={this.state.firstCategoryId}
                 onChange={e=>{this.OnFirstCategoryChange(e)}}
+                readOnly={this.props.readOnly}
                 >
                     <option value="">请选择一级分类</option>
                     {
@@ -95,7 +129,9 @@ class CateGorySelector extends React.Component {
                     this.state.secondCategoryList.length?
                
                 <select name="" className='form-control cate-select'
+                value={this.state.secondCategoryId}
                 onChange={e => { this.OnSecondCategoryChange(e) }}
+                readOnly={this.props.readOnly}
                 >
                     <option value="">请选择二级分类</option>
                     {

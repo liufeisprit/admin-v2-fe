@@ -1,6 +1,7 @@
 import React        from 'react'
 import Simditor     from 'simditor'
 import 'simditor/styles/simditor.scss'
+import './index.scss'
 class RichEditor extends React.Component{
     constructor(props){
         super(props)
@@ -27,6 +28,12 @@ class RichEditor extends React.Component{
         this.simditor.on('valuechanged',e=>{
             this.props.onValueChange(this.simditor.getValue())
         })
+    }
+    componentWillReceiveProps(nextProps){
+        if(this.props.defaultDetail!==nextProps.defaultDetail){
+
+            this.simditor.setValue(nextProps.defaultDetail)
+        }
     }
     render(){
         return(

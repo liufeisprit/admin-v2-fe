@@ -92,6 +92,17 @@ class Product{
             url: '/manage/product/save.do',
             data: product
         });
+        
+    }
+    //获取商品详情的接口
+    getProduct(productId){
+        return _mm.request({
+            type: 'post',
+            url: '/manage/product/detail.do',
+            data: {
+                productId:productId
+            }
+        });
     }
 }
 export default Product
