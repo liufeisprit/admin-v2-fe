@@ -37,7 +37,7 @@ class ProductDeail extends React.Component {
     loadProduct() {
         if (this.state.id) {
             _product.getProduct(this.state.id).then(res => {
-                let images = res.subImages.split(',');
+                let images = res.subImages?res.subImages.split(','):[];
                 res.subImages = images.map((image) => {
                     return {
                         uri: image,
@@ -58,7 +58,7 @@ class ProductDeail extends React.Component {
         return (
 
             <div id='page-wrapper'>
-                <PageTitle title='添加商品' />
+                <PageTitle title='查看商品' />
                 <div className="form-horizontal">
                     <div className="form-group">
                         <label className="col-md-2 control-label">商品名称</label>
