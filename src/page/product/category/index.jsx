@@ -47,17 +47,17 @@ class CategoryList extends React.Component {
     //修改品类名字
     updateName(id,name){
         let newName=window.prompt('请输入新的品类名称',name)
-        // if(newName){
-        //     _product.updateCategoryName({
-        //         categoryId:id,
-        //         categoryName:name
-        //     }).then(res=>{
-        //         _mm.successTips(res);
-        //         this.loadCategoryList()
-        //     },(err)=>{
-        //         _mm.errorTips(err)
-        //     })
-        // }
+        if(newName){
+            _product.updateCategoryName({
+                categoryId:id,
+                categoryName:newName
+            }).then(res=>{
+                _mm.successTips(res);
+                this.loadCategoryList()
+            },(err)=>{
+                _mm.errorTips(err)
+            })
+        }
     }
     render() {
         let tableHeads = [
@@ -69,6 +69,14 @@ class CategoryList extends React.Component {
         return (
             <div id='page-wrapper'>
                 <PageTitle title='品类列表'>
+                    <div className="page-header-right">
+                        <Link to='/product-category/add' className='btn btn-primary'>
+                            <i className='fa fa-plus'></i>
+                            <span>添加品类</span>
+                        </Link>
+                    </div>
+                </PageTitle>
+                
                     <div className="row">
                         <div className="col-md-12">
                             <p>父品类 ID: {this.state.parentCategoryId}</p>
@@ -82,7 +90,7 @@ class CategoryList extends React.Component {
                                         <td>{category.id}</td>
                                         <td>{category.name}</td>
                                         <td>
-                                            <a href="" className="opear"
+                                            <a href="javascript:;" className="opear"
                                                 onClick={(e) => { this.updateName(category.id,category.name)}}
                                             >修改名称</a>
                                             {
@@ -99,7 +107,7 @@ class CategoryList extends React.Component {
                         }
 
                     </TableList>
-                </PageTitle>
+                
             </div>
         )
     }
