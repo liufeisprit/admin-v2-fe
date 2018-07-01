@@ -3,13 +3,16 @@ const webpack=require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+let WEBPACK_ENV=process.env.WEBPACK_ENV||"env"
+console.log(WEBPACK_ENV)
 module.exports={
     entry:'./src/app.jsx',//入口文件
     //输出配置
     output:{
             path:path.resolve(__dirname,'dist'),
             filename:'js/app.js',
-            publicPath: '/dist/',
+            publicPath: WEBPACK_ENV=='ENV'?'/dist/'
+            :'//s.cst.nullval.com/admin-ve-fe/dist',
     },
     resolve:{
         alias: {
